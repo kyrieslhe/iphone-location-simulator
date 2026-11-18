@@ -2,9 +2,21 @@
 
 在 Mac 上通过 USB 为 iPhone 设置临时经纬度。可以用它检查地图或微信朋友圈等 App 如何使用模拟位置。程序通过 [pymobiledevice3 的定位模拟命令](https://doronz88.github.io/pymobiledevice3/latest/guides/cli-recipes/#dvt-examples) 使用 iPhone 的开发者接口。
 
+## 支持哪些设备？
+
+| 设备组合 | 怎么用 |
+| --- | --- |
+| Mac + iPhone | 用本仓库的 `iphone-location.command`，通过 USB 连接。**已在 iOS 27.2.1 真机上测试通过。** |
+| Windows + iPhone | 可尝试直接用 `pymobiledevice3`，需要带 Apple Mobile Device Service 的 iTunes。本项目未在 Windows 上实测。 |
+| Linux + iPhone | 可尝试直接用 `pymobiledevice3`，需要安装并启动 `usbmuxd`。本项目未在 Linux 上实测。 |
+| iPad | 当前脚本只识别 iPhone。iPad 可以尝试直接用 `pymobiledevice3`，本项目未实测。 |
+| 安卓 | 本工具使用苹果的开发者接口，安卓不适用。 |
+
+微信等 App 是否采用模拟位置，以各自版本的实测结果为准。
+
 ## 安装
 
-需要一台 Mac、Python 3.9 或更新版本，以及一台通过 USB 连接的 iPhone。此工具使用 iOS 17 起提供的连接方式。**定位模拟已在 iOS 27.2.1 真机上测试通过。** 微信等 App 是否采用模拟位置，以各自版本的实测结果为准。
+在 Mac 上使用本仓库的脚本需要 Python 3.9 或更新版本，以及一台通过 USB 连接的 iPhone。脚本使用 iOS 17 起提供的开发者连接方式。
 
 ```sh
 git clone https://github.com/kyrieslhe/iphone-location-simulator.git
@@ -30,6 +42,24 @@ python3 -m venv .venv
 
 # 手动清除模拟位置
 ./iphone-location.command clear
+```
+
+## Windows、Linux 或 iPad
+
+以下命令适用于尝试连接 iOS / iPadOS 17.4 或更新版本的设备。较早版本的连接方式见 [pymobiledevice3 安装说明](https://doronz88.github.io/pymobiledevice3/master/installation/)。先完成对应系统的驱动或服务安装，再用 USB 连接并解锁设备，信任电脑并开启开发者模式。运行命令时只连接一台要操作的设备。
+
+```sh
+python -m pip install pymobiledevice3==11.58.0
+pymobiledevice3 usbmux list
+pymobiledevice3 developer dvt simulate-location set -- 51.5080 -0.1281
+```
+
+如果系统用 `python3` 启动 Python，把安装命令里的 `python` 换成 `python3`。如果找不到 `pymobiledevice3` 命令，可以用 `python -m pymobiledevice3` 代替。
+
+测试结束后，按终端提示退出模拟会话，再运行下面的命令清除模拟位置。
+
+```sh
+pymobiledevice3 developer dvt simulate-location clear
 ```
 
 ## 许可证
