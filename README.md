@@ -4,7 +4,7 @@
 
 ## 安装
 
-需要一台 Mac、Python 3.9 或更新版本，以及一台通过 USB 连接的 iPhone。此工具使用 iOS 17 起提供的连接方式。已在 iOS 27.2.1 上验证 USB 识别和开发者模式查询。实际定位模拟及微信兼容性需用真机确认。
+需要一台 Mac、Python 3.9 或更新版本，以及一台通过 USB 连接的 iPhone。此工具使用 iOS 17 起提供的连接方式。**定位模拟已在 iOS 27.2.1 真机上测试通过。** 微信等 App 是否采用模拟位置，以各自版本的实测结果为准。
 
 ```sh
 git clone https://github.com/kyrieslhe/iphone-location-simulator.git
